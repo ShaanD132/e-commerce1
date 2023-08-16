@@ -1,6 +1,7 @@
 import prismadb from "@/lib/prismadb";
 import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs";
+import { Heading } from "@/components/ui/heading";
 
 //ISSUE: Params no storeId
 interface DashboardPageProps {
@@ -19,8 +20,10 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
 
 
   return(
-    <div>
-      Active Store: {store?.name}
+    <div className = "p-5">
+      <Heading
+      title = "Active Store: "
+      description = {store?.name} />
     </div>
   );
 }
