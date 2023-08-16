@@ -36,8 +36,9 @@ export const StoreModal = () => {
 			//create api post stores
 			const response = await axios.post("/api/stores", values);
 
-			//use toast to send nice message
-			toast.success("Store created.")
+			//using window.location.assign instead of router from NextNavigation
+			//as it does a complete refresh on page
+			window.location.assign(`/${response.data.id}`)
 		} catch(error) {
 			toast.error("Something went wrong.");
 		} finally {
@@ -47,45 +48,40 @@ export const StoreModal = () => {
 
 	return (
 		<Modal
-			title = "Create store"
-			description = "Add a new store to manage products and categories"
-			isOpen = {storeModal.isOpen}
-			onClose = {storeModal.onClose}>
-				<div>
-					<div className = "space-y-4 py-2 pb-4">
-						<Form{...form}>
-							<form onSubmit={form.handleSubmit(onSubmit)}>
-								<FormField
-								control={form.control}
-								name = "name"
-								render = {({ field }) => (
-									<FormItem>
-										<FormLabel>Name</FormLabel>
-										<FormControl>
-											<Input disabled ={loading}
-											placeholder="E-Commerce"
-											{...field}/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)} />
-								<div className = "pt-6 space-x-2 flex item-center justify-end w-full">
-									<Button
-										disabled={loading}
-										variant="outline"
-										onClick={storeModal.onClose}>
-										Cancel
-									</Button>
-									<Button
-										disabled = {loading}
-										type="submit">
-										Continue
-									</Button>
-								</div>
-							</form>
-						</Form>
-					</div>
-				</div>
-			</Modal>
+      title="Create store"
+      description="Add a new store to manage products and categories."
+      isOpen={storeModal.isOpen} 
+      onClose={storeModal.onClose}
+    >
+      <div>
+        <div className="space-y-4 py-2 pb-4">
+          <div className="space-y-2">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)}>
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name</FormLabel>
+                      <FormControl>
+                        <Input disabled={loading} placeholder="E-Commerce" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className="pt-6 space-x-2 flex items-center justify-end w-full">
+                  <Button disabled={loading} variant="outline" onClick={storeModal.onClose}>
+                    Cancel
+                  </Button>
+                  <Button disabled={loading} type="submit">Continue</Button>
+                </div>
+              </form>
+            </Form>
+          </div>
+        </div>
+      </div>
+    </Modal>
 	);
 };
