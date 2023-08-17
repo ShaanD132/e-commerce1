@@ -42,6 +42,11 @@ export const BillboardForm: React.FC<BillboardsFormProps> = ({
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  const title = initialData ? "Edit Billboard" : "Create Billboard"
+  const description = initialData ? "Edit a Billboard" : "Add a Billboard"
+  const toastMessage = initialData ? "Billboard Updated" : "Billboard Created"
+  const actions = initialData ? "Save Changes" : "Create"
+
 
   const form = useForm<BillboardFormValues>({
     resolver: zodResolver(formSchema),
@@ -88,8 +93,8 @@ export const BillboardForm: React.FC<BillboardsFormProps> = ({
     />
       <div className = "flex items-center justify-between">
         <Heading
-          title = "Billboards"
-          description = "Manage store preferences"
+          title ={title}
+          description = {description}
         />
         <Button
           disabled = {loading}
@@ -109,10 +114,10 @@ export const BillboardForm: React.FC<BillboardsFormProps> = ({
           <div className = "grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
-              name = "name"
+              name = "label"
               render={({field}) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Label</FormLabel>
 
                   <FormControl>
                     <Input disabled={loading} placeholder = "Store name" {...field}/>
@@ -124,17 +129,13 @@ export const BillboardForm: React.FC<BillboardsFormProps> = ({
           </div>
 
           <Button disabled={loading} className = "ml-auto" type = "submit">
-            Save Changes
+            {actions}
           </Button>
         </form>
       </Form>
 
       <Separator />
-      <ApiAlert
-      title = "NEXT_PUBLIC_API_URL"
-      description = {`${origin}/api/${params.storeId}}`}
-      variant="public"
-      />
+      
     </>
   )
 }
