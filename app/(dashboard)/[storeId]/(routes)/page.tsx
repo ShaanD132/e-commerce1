@@ -22,7 +22,7 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({
   return(
     <div className = "p-5">
       <Heading
-      title = "Active Store: "
+      title = "Active Store Loaded: "
       description = {store?.name} />
     </div>
   );
